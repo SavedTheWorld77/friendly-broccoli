@@ -1,7 +1,10 @@
-import 'package:dev_portfolio/theme/app_colors.dart';
+// import 'package:dev_portfolio/theme/app_colors.dart';
 import 'package:dev_portfolio/theme/app_typography.dart';
+import 'package:dev_portfolio/widgets/nav_text.dart';
+import 'package:dev_portfolio/widgets/phone_widget.dart';
+import 'package:dev_portfolio/widgets/tablet_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+// import 'package:gap/gap.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -17,229 +20,134 @@ class _LandingPageState extends State<LandingPage> {
     final textTheme = Theme.of(context).textTheme;
     final listTileColor = Theme.of(context).listTileTheme;
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 600,
-                width: 300,
-                decoration: BoxDecoration(
-                  color: color.surface,
-                  borderRadius: BorderRadius.circular(32.0),
-                  border: Border.all(width: 2.0, color: Color(0xFF2A3140)),
-                ),
-                child: Center(
-                  child: Container(
-                    height: 570,
-                    width: 270,
-                    decoration: BoxDecoration(
-                      color: color.surfaceContainerHigh,
-                      borderRadius: BorderRadius.circular(24.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        _notch(color),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8.0,
-                            horizontal: 12.0,
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    height: 32,
-                                    width: 32,
-                                    decoration: BoxDecoration(
-                                      color: color.primary,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "P",
-                                        style: textTheme.bodyLarge?.copyWith(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "PaxAide",
-                                    style: textTheme.bodyMedium?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.menu,
-                                    color: listTileColor.iconColor,
-                                  ),
-                                ],
-                              ),
-                              Gap(24.0),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                spacing: 12.0,
-                                children: [
-                                  _statCard(
-                                    '142',
-                                    color.primary,
-                                    'bookings today',
-                                  ),
-                                  _statCard(
-                                    '87%',
-                                    Color(0xFF00C896),
-                                    'occupancy',
-                                  ),
-                                ],
-                              ),
-                              Gap(24.0),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'RECENT ROOMS',
-                                  style: textTheme.labelLarge?.copyWith(
-                                    fontFamily: AppTypography.spaceMono,
-                                    color: listTileColor.iconColor,
-                                  ),
-                                ),
-                              ),
-                              Gap(12.0),
-                              _roomCard(
-                                'Room 201 - Standard',
-                                PhoneRoomStatus.avail,
-                              ),
-                              _roomCard(
-                                'Room 305 - Deluxe',
-                                PhoneRoomStatus.booked,
-                              ),
-                              _roomCard('Suite 501', PhoneRoomStatus.hold),
-                              _roomCard(
-                                'Room 118 - Twin',
-                                PhoneRoomStatus.avail,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  _roomCard(String label, PhoneRoomStatus status) {
-    final color = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final listTileColor = Theme.of(context).listTileTheme;
-    late Color dotColor;
-
-    switch (status) {
-      case PhoneRoomStatus.avail:
-        dotColor = Color(0xFF00C896);
-      case PhoneRoomStatus.booked:
-        dotColor = AppColors.amber400;
-      case PhoneRoomStatus.hold:
-        dotColor = color.primary;
-    }
-
-    return Container(
-      width: double.maxFinite,
-      padding: EdgeInsets.all(8.0),
-      margin: EdgeInsets.only(bottom: 8.0),
-      decoration: BoxDecoration(
-        color: color.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          CircleAvatar(radius: 6.0, backgroundColor: dotColor),
-          Gap(12.0),
-          Expanded(
-            child: Text(
-              label,
-              style: textTheme.labelLarge?.copyWith(
-                color: listTileColor.iconColor,
-              ),
-            ),
-          ),
-          status == PhoneRoomStatus.avail
-              ? Icon(Icons.check, color: Colors.white, size: 14.0)
-              : SizedBox.shrink(),
-          Gap(6.0),
-          Text(
-            status.name,
-            style: textTheme.labelLarge?.copyWith(color: Colors.white),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container _statCard(String label, Color labelColor, String description) {
-    final textTheme = Theme.of(context).textTheme;
-    final listTileColor = Theme.of(context).listTileTheme;
-    return Container(
-      width: 100,
-      height: 92,
-      padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-      decoration: BoxDecoration(
-        color: Color(0x1454C5F8),
-        borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: Color(0x2654C5F8)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: textTheme.bodyMedium?.copyWith(
+      appBar: AppBar(
+        leading: Center(
+          child: Text(
+            "// rhen.dev",
+            style: textTheme.bodyLarge?.copyWith(
+              color: color.primary,
               fontFamily: AppTypography.spaceMono,
-              fontSize: 16.0,
-              fontWeight: FontWeight.w700,
-              color: labelColor,
             ),
           ),
-          Text(
-            description,
-            style: textTheme.labelLarge?.copyWith(
-              color: listTileColor.iconColor,
+        ),
+        leadingWidth: 160.0,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1),
+          child: Container(height: 1, color: color.outline),
+        ),
+        toolbarHeight: 90.0,
+        centerTitle: true,
+        title: Row(
+          spacing: 24.0,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            NavText(label: 'work', onTap: () {}),
+            NavText(label: 'stack', onTap: () {}),
+            NavText(label: 'about', onTap: () {}),
+          ],
+        ),
+        actions: [_hireMeButton(color, textTheme)],
+      ),
+      extendBodyBehindAppBar: true,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.only(top: 90 + 64.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 64.0,
+              children: [
+                Column(
+                  spacing: 24.0,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _roleTitle(color, textTheme),
+                    _headline(textTheme, color),
+                    Text(
+                      'I craft cross-platform mobile and web experiences with\nFlutter and Firebase — clean architecture, smooth\nanimations, real-world performance.',
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: listTileColor.iconColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    PhoneWidget(),
+                    Positioned(right: -40, bottom: -20, child: TabletWidget()),
+                  ],
+                ),
+              ],
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  RichText _headline(TextTheme textTheme, ColorScheme color) {
+    return RichText(
+      text: TextSpan(
+        text: 'Building apps\nthat feel',
+        style: textTheme.displayLarge?.copyWith(color: Colors.white),
+        children: [
+          TextSpan(
+            text: ' native',
+            style: textTheme.displayLarge?.copyWith(color: color.primary),
           ),
         ],
       ),
     );
   }
 
-  Container _notch(ColorScheme color) {
+  Row _roleTitle(ColorScheme color, TextTheme textTheme) {
+    return Row(
+      spacing: 12.0,
+      children: [
+        Container(
+          height: 1.0,
+          width: 32.0,
+          decoration: BoxDecoration(color: color.secondary),
+        ),
+        Text(
+          'flutter developer',
+          style: textTheme.bodyMedium?.copyWith(
+            color: color.secondary,
+            letterSpacing: 3.0,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Container _hireMeButton(ColorScheme color, TextTheme textTheme) {
     return Container(
-      height: 25,
-      width: 100,
-      decoration: BoxDecoration(
-        color: color.surfaceContainerLow,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(16.0),
-          bottomRight: Radius.circular(16.0),
+      margin: EdgeInsets.only(right: 24.0),
+      child: ElevatedButton(
+        onPressed: () {},
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
+            if (states.contains(WidgetState.hovered)) {
+              // Optional hover color
+              return color.primary.withValues(alpha: 0.3);
+            }
+            return Colors.transparent;
+          }),
+
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.0),
+              side: BorderSide(color: color.primary, width: 1.5),
+            ),
+          ),
+        ),
+        child: Text(
+          'hire me',
+          style: textTheme.labelLarge?.copyWith(color: color.primary),
         ),
       ),
     );
   }
 }
-
-enum PhoneRoomStatus { avail, booked, hold }

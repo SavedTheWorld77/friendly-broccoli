@@ -8,7 +8,7 @@ abstract final class AppTheme {
   // DARK
   // ─────────────────────────────────────────────────────────────────
   static ThemeData get dark {
-    const primary   = AppColors.cyan300;
+    const primary = AppColors.cyan300;
     const onPrimary = AppColors.cyan900;
 
     final textTheme = AppTypography.textTheme(
@@ -24,25 +24,25 @@ abstract final class AppTheme {
 
       // ── Color scheme ──────────────────────────────────────────────
       colorScheme: const ColorScheme.dark(
-        primary:          primary,
-        onPrimary:        onPrimary,
+        primary: primary,
+        onPrimary: onPrimary,
         primaryContainer: AppColors.cyan800,
         onPrimaryContainer: AppColors.cyan50,
-        secondary:        AppColors.green400,
-        onSecondary:      AppColors.green800,
-        tertiary:         AppColors.amber400,
-        onTertiary:       AppColors.amber800,
-        error:            AppColors.red400,
-        onError:          AppColors.red100,
-        surface:          AppColors.darkSurface,
-        onSurface:        AppColors.darkTextPrimary,
+        secondary: AppColors.green400,
+        onSecondary: AppColors.green800,
+        tertiary: AppColors.amber400,
+        onTertiary: AppColors.amber800,
+        error: AppColors.red400,
+        onError: AppColors.red100,
+        surface: AppColors.darkSurface,
+        onSurface: AppColors.darkTextPrimary,
         onSurfaceVariant: AppColors.darkTextSecondary,
-        outline:          AppColors.darkBorder,
-        outlineVariant:   AppColors.darkBorderHi,
+        outline: AppColors.darkBorder,
+        outlineVariant: AppColors.darkBorderHi,
         surfaceContainerHighest: AppColors.darkElevated,
-        surfaceContainerHigh:    AppColors.darkSurface2,
-        surfaceContainer:        AppColors.darkSurface,
-        surfaceContainerLow:     AppColors.darkBg,
+        surfaceContainerHigh: AppColors.darkSurface2,
+        surfaceContainer: AppColors.darkSurface,
+        surfaceContainerLow: AppColors.darkBg,
       ),
 
       // ── Typography ────────────────────────────────────────────────
@@ -51,14 +51,12 @@ abstract final class AppTheme {
 
       // ── AppBar ────────────────────────────────────────────────────
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.darkBg.withOpacity(0.92),
+        backgroundColor: AppColors.darkBg.withValues(alpha: 0.92),
         foregroundColor: AppColors.darkTextPrimary,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        titleTextStyle: AppTypography.monoBrand.copyWith(
-          color: primary,
-        ),
+        titleTextStyle: AppTypography.monoBrand.copyWith(color: primary),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.light,
@@ -83,7 +81,9 @@ abstract final class AppTheme {
           backgroundColor: primary,
           foregroundColor: onPrimary,
           elevation: 0,
-          textStyle: AppTypography.monoNav.copyWith(fontWeight: FontWeight.w700),
+          textStyle: AppTypography.monoNav.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         ),
@@ -114,7 +114,9 @@ abstract final class AppTheme {
         filled: true,
         fillColor: AppColors.darkSurface2,
         hintStyle: AppTypography.body.copyWith(color: AppColors.darkTextMuted),
-        labelStyle: AppTypography.bodySmall.copyWith(color: AppColors.darkTextSecondary),
+        labelStyle: AppTypography.bodySmall.copyWith(
+          color: AppColors.darkTextSecondary,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppColors.darkBorder, width: 0.5),
@@ -127,13 +129,18 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: primary, width: 1),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
       ),
 
       // ── Chip ──────────────────────────────────────────────────────
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.darkSurface2,
-        labelStyle: AppTypography.monoBadge.copyWith(color: AppColors.darkTextSecondary),
+        labelStyle: AppTypography.monoBadge.copyWith(
+          color: AppColors.darkTextSecondary,
+        ),
         side: const BorderSide(color: AppColors.darkBorder, width: 0.5),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
@@ -181,24 +188,36 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: AppColors.darkBorder, width: 0.5),
         ),
-        titleTextStyle: AppTypography.h2.copyWith(color: AppColors.darkTextPrimary),
-        contentTextStyle: AppTypography.body.copyWith(color: AppColors.darkTextSecondary),
+        titleTextStyle: AppTypography.h2.copyWith(
+          color: AppColors.darkTextPrimary,
+        ),
+        contentTextStyle: AppTypography.body.copyWith(
+          color: AppColors.darkTextSecondary,
+        ),
       ),
 
       // ── SnackBar ──────────────────────────────────────────────────
       snackBarTheme: SnackBarThemeData(
         backgroundColor: AppColors.darkElevated,
-        contentTextStyle: AppTypography.bodySmall.copyWith(color: AppColors.darkTextPrimary),
+        contentTextStyle: AppTypography.bodySmall.copyWith(
+          color: AppColors.darkTextPrimary,
+        ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         behavior: SnackBarBehavior.floating,
       ),
 
       // ── Switch ────────────────────────────────────────────────────
       switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.resolveWith((states) =>
-            states.contains(WidgetState.selected) ? onPrimary : AppColors.darkTextMuted),
-        trackColor: WidgetStateProperty.resolveWith((states) =>
-            states.contains(WidgetState.selected) ? primary : AppColors.darkSurface2),
+        thumbColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? onPrimary
+              : AppColors.darkTextMuted,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? primary
+              : AppColors.darkSurface2,
+        ),
       ),
 
       // ── Tabs ──────────────────────────────────────────────────────
@@ -228,7 +247,7 @@ abstract final class AppTheme {
   // LIGHT
   // ─────────────────────────────────────────────────────────────────
   static ThemeData get light {
-    const primary   = AppColors.cyan600;
+    const primary = AppColors.cyan600;
     const onPrimary = AppColors.white;
 
     final textTheme = AppTypography.textTheme(
@@ -244,25 +263,25 @@ abstract final class AppTheme {
 
       // ── Color scheme ──────────────────────────────────────────────
       colorScheme: const ColorScheme.light(
-        primary:          primary,
-        onPrimary:        onPrimary,
+        primary: primary,
+        onPrimary: onPrimary,
         primaryContainer: AppColors.cyan50,
         onPrimaryContainer: AppColors.cyan800,
-        secondary:        AppColors.green600,
-        onSecondary:      AppColors.white,
-        tertiary:         AppColors.amber600,
-        onTertiary:       AppColors.white,
-        error:            AppColors.red600,
-        onError:          AppColors.white,
-        surface:          AppColors.lightSurface,
-        onSurface:        AppColors.lightTextPrimary,
+        secondary: AppColors.green600,
+        onSecondary: AppColors.white,
+        tertiary: AppColors.amber600,
+        onTertiary: AppColors.white,
+        error: AppColors.red600,
+        onError: AppColors.white,
+        surface: AppColors.lightSurface,
+        onSurface: AppColors.lightTextPrimary,
         onSurfaceVariant: AppColors.lightTextSecondary,
-        outline:          AppColors.lightBorder,
-        outlineVariant:   AppColors.lightBorderHi,
+        outline: AppColors.lightBorder,
+        outlineVariant: AppColors.lightBorderHi,
         surfaceContainerHighest: AppColors.lightElevated,
-        surfaceContainerHigh:    AppColors.lightSurface2,
-        surfaceContainer:        AppColors.lightSurface,
-        surfaceContainerLow:     AppColors.lightBg,
+        surfaceContainerHigh: AppColors.lightSurface2,
+        surfaceContainer: AppColors.lightSurface,
+        surfaceContainerLow: AppColors.lightBg,
       ),
 
       // ── Typography ────────────────────────────────────────────────
@@ -271,14 +290,12 @@ abstract final class AppTheme {
 
       // ── AppBar ────────────────────────────────────────────────────
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.lightSurface.withOpacity(0.95),
+        backgroundColor: AppColors.lightSurface.withValues(alpha: 0.95),
         foregroundColor: AppColors.lightTextPrimary,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        titleTextStyle: AppTypography.monoBrand.copyWith(
-          color: primary,
-        ),
+        titleTextStyle: AppTypography.monoBrand.copyWith(color: primary),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.light,
           statusBarIconBrightness: Brightness.dark,
@@ -303,7 +320,9 @@ abstract final class AppTheme {
           backgroundColor: primary,
           foregroundColor: onPrimary,
           elevation: 0,
-          textStyle: AppTypography.monoNav.copyWith(fontWeight: FontWeight.w700),
+          textStyle: AppTypography.monoNav.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         ),
@@ -334,26 +353,39 @@ abstract final class AppTheme {
         filled: true,
         fillColor: AppColors.lightSurface2,
         hintStyle: AppTypography.body.copyWith(color: AppColors.lightTextMuted),
-        labelStyle: AppTypography.bodySmall.copyWith(color: AppColors.lightTextSecondary),
+        labelStyle: AppTypography.bodySmall.copyWith(
+          color: AppColors.lightTextSecondary,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.lightBorder, width: 0.5),
+          borderSide: const BorderSide(
+            color: AppColors.lightBorder,
+            width: 0.5,
+          ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.lightBorder, width: 0.5),
+          borderSide: const BorderSide(
+            color: AppColors.lightBorder,
+            width: 0.5,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: primary, width: 1),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
       ),
 
       // ── Chip ──────────────────────────────────────────────────────
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.lightSurface2,
-        labelStyle: AppTypography.monoBadge.copyWith(color: AppColors.lightTextSecondary),
+        labelStyle: AppTypography.monoBadge.copyWith(
+          color: AppColors.lightTextSecondary,
+        ),
         side: const BorderSide(color: AppColors.lightBorder, width: 0.5),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
@@ -389,7 +421,9 @@ abstract final class AppTheme {
           if (states.contains(WidgetState.selected)) {
             return AppTypography.caption.copyWith(color: primary);
           }
-          return AppTypography.caption.copyWith(color: AppColors.lightTextMuted);
+          return AppTypography.caption.copyWith(
+            color: AppColors.lightTextMuted,
+          );
         }),
       ),
 
@@ -401,24 +435,36 @@ abstract final class AppTheme {
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: AppColors.lightBorder, width: 0.5),
         ),
-        titleTextStyle: AppTypography.h2.copyWith(color: AppColors.lightTextPrimary),
-        contentTextStyle: AppTypography.body.copyWith(color: AppColors.lightTextSecondary),
+        titleTextStyle: AppTypography.h2.copyWith(
+          color: AppColors.lightTextPrimary,
+        ),
+        contentTextStyle: AppTypography.body.copyWith(
+          color: AppColors.lightTextSecondary,
+        ),
       ),
 
       // ── SnackBar ──────────────────────────────────────────────────
       snackBarTheme: SnackBarThemeData(
         backgroundColor: AppColors.lightElevated,
-        contentTextStyle: AppTypography.bodySmall.copyWith(color: AppColors.lightTextPrimary),
+        contentTextStyle: AppTypography.bodySmall.copyWith(
+          color: AppColors.lightTextPrimary,
+        ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         behavior: SnackBarBehavior.floating,
       ),
 
       // ── Switch ────────────────────────────────────────────────────
       switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.resolveWith((states) =>
-            states.contains(WidgetState.selected) ? onPrimary : AppColors.lightTextMuted),
-        trackColor: WidgetStateProperty.resolveWith((states) =>
-            states.contains(WidgetState.selected) ? primary : AppColors.lightSurface2),
+        thumbColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? onPrimary
+              : AppColors.lightTextMuted,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? primary
+              : AppColors.lightSurface2,
+        ),
       ),
 
       // ── Tabs ──────────────────────────────────────────────────────
