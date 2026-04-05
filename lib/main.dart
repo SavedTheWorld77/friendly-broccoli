@@ -1,5 +1,6 @@
 import 'package:dev_portfolio/screens/landing_page.dart';
 import 'package:dev_portfolio/theme/app_theme.dart';
+import 'package:dev_portfolio/widgets/app_text_scale.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: AppTheme.dark,
-      home: LandingPage(),
+      home: AppTextScale.builder(child: LandingPage()),
     );
   }
 }

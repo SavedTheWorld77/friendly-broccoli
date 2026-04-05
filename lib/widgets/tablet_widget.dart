@@ -14,6 +14,9 @@ class _TabletWidgetState extends State<TabletWidget> {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final listTileColor = Theme.of(context).listTileTheme;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final tabletHeight = screenHeight * 0.15;
+    final tabletWidth = tabletHeight * (16 / 10);
     return Transform.rotate(
       angle: 6 * (pi / 180),
       child: Column(
@@ -25,17 +28,16 @@ class _TabletWidgetState extends State<TabletWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 150,
-                width: 250,
+                height: tabletHeight,
+                width: tabletWidth,
                 decoration: BoxDecoration(
                   color: color.surface,
                   borderRadius: BorderRadius.circular(16.0),
                   border: Border.all(width: 2.0, color: Color(0xFF2A3140)),
                 ),
+                padding: EdgeInsets.all(tabletWidth * 0.03),
                 child: Center(
                   child: Container(
-                    height: 130,
-                    width: 230,
                     padding: EdgeInsets.all(12.0),
                     decoration: BoxDecoration(
                       color: color.surfaceContainerHigh,

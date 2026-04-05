@@ -1,5 +1,6 @@
 import 'package:dev_portfolio/theme/app_colors.dart';
 import 'package:dev_portfolio/theme/app_typography.dart';
+import 'package:dev_portfolio/widgets/app_text_scale.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -16,6 +17,10 @@ class _PhoneWidgetState extends State<PhoneWidget> {
     final color = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final listTileColor = Theme.of(context).listTileTheme;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final phoneHeight = screenHeight * 0.7;
+    final phoneWidth = phoneHeight * 9 / 19.5; // phone aspect ratio
+    final u = phoneWidth / 100;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -24,17 +29,16 @@ class _PhoneWidgetState extends State<PhoneWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 600,
-              width: 300,
+              height: phoneHeight,
+              width: phoneWidth,
               decoration: BoxDecoration(
                 color: color.surface,
                 borderRadius: BorderRadius.circular(32.0),
                 border: Border.all(width: 2.0, color: Color(0xFF2A3140)),
               ),
+              padding: EdgeInsets.all(phoneWidth * 0.03),
               child: Center(
                 child: Container(
-                  height: 570,
-                  width: 270,
                   decoration: BoxDecoration(
                     color: color.surfaceContainerHigh,
                     borderRadius: BorderRadius.circular(24.0),
@@ -63,17 +67,21 @@ class _PhoneWidgetState extends State<PhoneWidget> {
                                   child: Center(
                                     child: Text(
                                       "P",
-                                      style: textTheme.bodyLarge?.copyWith(
-                                        color: Colors.white,
+                                      style: AppTextScale.of(context).scale(
+                                        textTheme.bodyLarge!.copyWith(
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                                 Text(
                                   "PaxAide",
-                                  style: textTheme.bodyMedium?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
+                                  style: AppTextScale.of(context).scale(
+                                    textTheme.bodyMedium!.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                                 Icon(
@@ -87,15 +95,19 @@ class _PhoneWidgetState extends State<PhoneWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               spacing: 12.0,
                               children: [
-                                _statCard(
-                                  '142',
-                                  color.primary,
-                                  'bookings today',
+                                Expanded(
+                                  child: _statCard(
+                                    '142',
+                                    color.primary,
+                                    'bookings today',
+                                  ),
                                 ),
-                                _statCard(
-                                  '87%',
-                                  Color(0xFF00C896),
-                                  'occupancy',
+                                Expanded(
+                                  child: _statCard(
+                                    '87%',
+                                    Color(0xFF00C896),
+                                    'occupancy',
+                                  ),
                                 ),
                               ],
                             ),
@@ -104,9 +116,11 @@ class _PhoneWidgetState extends State<PhoneWidget> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'RECENT ROOMS',
-                                style: textTheme.labelLarge?.copyWith(
-                                  fontFamily: AppTypography.spaceMono,
-                                  color: listTileColor.iconColor,
+                                style: AppTextScale.of(context).scale(
+                                  textTheme.labelLarge!.copyWith(
+                                    fontFamily: AppTypography.spaceMono,
+                                    color: listTileColor.iconColor,
+                                  ),
                                 ),
                               ),
                             ),
@@ -167,8 +181,8 @@ class _PhoneWidgetState extends State<PhoneWidget> {
           Expanded(
             child: Text(
               label,
-              style: textTheme.labelLarge?.copyWith(
-                color: listTileColor.iconColor,
+              style: AppTextScale.of(context).scale(
+                textTheme.labelLarge!.copyWith(color: listTileColor.iconColor),
               ),
             ),
           ),
@@ -178,7 +192,9 @@ class _PhoneWidgetState extends State<PhoneWidget> {
           Gap(6.0),
           Text(
             status.name,
-            style: textTheme.labelLarge?.copyWith(color: Colors.white),
+            style: AppTextScale.of(
+              context,
+            ).scale(textTheme.labelLarge!.copyWith(color: Colors.white)),
           ),
         ],
       ),
@@ -189,8 +205,7 @@ class _PhoneWidgetState extends State<PhoneWidget> {
     final textTheme = Theme.of(context).textTheme;
     final listTileColor = Theme.of(context).listTileTheme;
     return Container(
-      width: 100,
-      height: 92,
+      height: 100,
       padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
       decoration: BoxDecoration(
         color: Color(0x1454C5F8),
@@ -202,16 +217,18 @@ class _PhoneWidgetState extends State<PhoneWidget> {
         children: [
           Text(
             label,
-            style: textTheme.bodyMedium?.copyWith(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w700,
-              color: labelColor,
+            style: AppTextScale.of(context).scale(
+              textTheme.bodyMedium!.copyWith(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w700,
+                color: labelColor,
+              ),
             ),
           ),
           Text(
             description,
-            style: textTheme.labelLarge?.copyWith(
-              color: listTileColor.iconColor,
+            style: AppTextScale.of(context).scale(
+              textTheme.labelLarge!.copyWith(color: listTileColor.iconColor),
             ),
           ),
         ],
@@ -235,3 +252,7 @@ class _PhoneWidgetState extends State<PhoneWidget> {
 }
 
 enum PhoneRoomStatus { avail, booked, hold }
+
+extension DoubleX on double {
+  double toU(double d) => (this / d) * 100;
+}

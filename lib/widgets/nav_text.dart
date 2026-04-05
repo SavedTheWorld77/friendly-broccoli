@@ -1,3 +1,4 @@
+import 'package:dev_portfolio/widgets/app_text_scale.dart';
 import 'package:flutter/material.dart';
 
 class NavText extends StatefulWidget {
@@ -24,9 +25,9 @@ class _NavTextState extends State<NavText> {
         onTap: widget.onTap,
         child: Text(
           widget.label,
-          style: textTheme.bodyLarge?.copyWith(
+          style: AppTextScale.of(context).scale(textTheme.bodyLarge!.copyWith(
             color: isHovered ? Colors.white : listTileColor.iconColor,
-          ),
+          )),
         ),
       ),
     );
