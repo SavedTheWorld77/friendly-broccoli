@@ -96,6 +96,7 @@ class _ExperienceCardState extends State<ExperienceCard> {
       style: AppTextScale.of(context).scale(
         AppTypography.monoEyebrow.copyWith(
           color: listTileColor.iconColor,
+          fontSize: 12.0,
           letterSpacing: 0,
         ),
       ),
@@ -117,9 +118,13 @@ class _ExperienceCardState extends State<ExperienceCard> {
     final textTheme = Theme.of(context).textTheme;
     return Text(
       widget.subtitle,
-      style: AppTextScale.of(
-        context,
-      ).scale(textTheme.titleMedium!.copyWith(color: color.primary)),
+      style: AppTextScale.of(context).scale(
+        textTheme.titleMedium!.copyWith(
+          color: color.primary,
+          fontFamily: AppTypography.spaceMono,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
     );
   }
 }

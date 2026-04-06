@@ -1,4 +1,3 @@
-// import 'package:dev_portfolio/theme/app_colors.dart';
 import 'package:dev_portfolio/theme/app_typography.dart';
 import 'package:dev_portfolio/widgets/app_text_scale.dart';
 import 'package:dev_portfolio/widgets/experience_card.dart';
@@ -12,17 +11,20 @@ import 'package:dev_portfolio/widgets/skill_hover_card.dart';
 import 'package:dev_portfolio/widgets/tablet_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-// import 'package:gap/gap.dart';
+import 'package:web/web.dart' as web;
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
-
+  const LandingPage({super.key, required this.onToggle});
+  final Function() onToggle;
   @override
   State<LandingPage> createState() => _LandingPageState();
 }
 
 class _LandingPageState extends State<LandingPage> {
   final GlobalKey projectsKey = GlobalKey();
+  final GlobalKey aboutMeKey = GlobalKey();
+  final GlobalKey stacksKey = GlobalKey();
+  bool isDarkMode = true;
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +57,19 @@ class _LandingPageState extends State<LandingPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             NavText(label: 'work', onTap: () {}),
-            NavText(label: 'stack', onTap: () {}),
-            NavText(label: 'about', onTap: () {}),
+            NavText(label: 'stack', onTap: () => _navigateToKey(stacksKey)),
+            NavText(label: 'about', onTap: () => _navigateToKey(aboutMeKey)),
           ],
         ),
-        actions: [_hireMeButton(color, textTheme)],
+        actions: [
+          IconButton(onPressed: () {
+            widget.onToggle();
+            setState(() {
+              isDarkMode = !isDarkMode;
+            });
+          }, icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode)),
+          Gap(12.0),
+          _hireMeButton(color, textTheme)],
       ),
       extendBodyBehindAppBar: true,
       body: SafeArea(
@@ -74,10 +84,12 @@ class _LandingPageState extends State<LandingPage> {
               ),
               _buildDivider(),
               _buildSecondSection(),
-              _buildDivider(key: projectsKey),
+              _buildDivider(),
               _buildThirdSection(),
               _buildDivider(),
               _buildFourthSection(),
+              _buildDivider(),
+              _buildFifthSection(),
               _buildGetInTouch(),
               Gap(24.0),
               _buildFooter(),
@@ -203,7 +215,301 @@ class _LandingPageState extends State<LandingPage> {
   SizedBox _buildLinkedInButton() {
     return SizedBox(
       height: 50,
-      child: OutlinedButton(onPressed: () {}, child: Text('GitHub')),
+      child: OutlinedButton(onPressed: () {}, child: Text('LinkedIn')),
+    );
+  }
+
+  Row _buildAboutMeOverline() {
+    final textTheme = Theme.of(context).textTheme;
+    final listTileColor = Theme.of(context).listTileTheme;
+    return Row(
+      spacing: 12.0,
+      children: [
+        Container(
+          height: 1.0,
+          width: 32.0,
+          decoration: BoxDecoration(color: listTileColor.iconColor),
+        ),
+        Text(
+          'about me',
+          style: AppTextScale.of(context).scale(
+            textTheme.labelSmall!.copyWith(
+              color: listTileColor.iconColor,
+              letterSpacing: 3.0,
+              fontSize: 14.0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _buildAvailableForNewProjectsText() {
+    final textTheme = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
+    return Row(
+      spacing: 12.0,
+      children: [
+        // Container(
+        //   height: 1.0,
+        //   width: 32.0,
+        //   decoration: BoxDecoration(color: listTileColor.iconColor),
+        // ),
+        Text(
+          'available for new projects',
+          style: AppTextScale.of(context).scale(
+            textTheme.labelSmall!.copyWith(
+              color: color.secondary,
+              fontSize: 12.0,
+              letterSpacing: 0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _buildAboutMeSectionName() {
+    return Column(
+      spacing: 12.0,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildAboutMeOverline(),
+        _buildHeadline('the person behind the code'),
+      ],
+    );
+  }
+
+  Padding _buildFifthSection() {
+    final color = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final listTileColor = Theme.of(context).listTileTheme;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: SectionLayout(
+        key: aboutMeKey,
+        child: ResponsiveLayoutWidget(
+          phone: _buildAboutMeSectionPhone(color, textTheme, listTileColor),
+          tablet: _buildAboutMeSectionPhone(color, textTheme, listTileColor),
+          desktop: _buildAboutMeSectionWeb(color, textTheme, listTileColor),
+        ),
+      ),
+    );
+  }
+
+  Row _buildAboutMeSectionWeb(
+    ColorScheme color,
+    TextTheme textTheme,
+    ListTileThemeData listTileColor,
+  ) {
+    return Row(
+      spacing: 128.0,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildAboutMeSectionName(),
+              Gap(48.0),
+              Container(
+                height: 180.0,
+                width: 180.0,
+                decoration: BoxDecoration(
+                  color: color.surfaceContainer,
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 2.0, color: color.outline),
+                  image: DecorationImage(image: AssetImage('assets/rhen.jpg')),
+                ),
+              ),
+              Gap(24.0),
+              _buildAvailableForNewProjectsText(),
+              Gap(24.0),
+              RichText(
+                text: TextSpan(
+                  style: AppTextScale.of(context).scale(
+                    textTheme.bodyMedium!.copyWith(
+                      color: listTileColor.iconColor,
+                    ),
+                  ),
+                  children: [
+                    TextSpan(text: '''I'm a Flutter developer based in the '''),
+                    TextSpan(
+                      text: '''Philippines ''',
+                      style: AppTextScale.of(context).scale(
+                        textTheme.bodyMedium!.copyWith(color: Colors.white),
+                      ),
+                    ),
+                    TextSpan(
+                      text:
+                          '''with 5+ years of experience building cross-platform mobile and web apps. I've shipped products used by real users — from investment features inside the Maya super app to hotel management systems contracted by Marriott Hotels US.\n\n''',
+                    ),
+                    TextSpan(text: '''I care deeply about '''),
+                    TextSpan(
+                      text: '''clean architecture''',
+                      style: AppTextScale.of(context).scale(
+                        textTheme.bodyMedium!.copyWith(color: Colors.white),
+                      ),
+                    ),
+                    TextSpan(
+                      text:
+                          ''', offline-first design, and building things that actually hold up in production. I prefer working close to the problem — understanding what the product needs before writing a single line of code.\n\n''',
+                    ),
+                    TextSpan(text: '''Outside work, I ride my '''),
+                    TextSpan(
+                      text: '''XSR155 ''',
+                      style: AppTextScale.of(context).scale(
+                        textTheme.bodyMedium!.copyWith(color: Colors.white),
+                      ),
+                    ),
+                    TextSpan(
+                      text:
+                          '''around town, keep up with anime and manga, and hunt for good streetwear finds in thrift stores. I also taught mobile development to college students for a year — turns out explaining things to others makes you a better developer.''',
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(child: _buildAboutMeCards()),
+      ],
+    );
+  }
+
+  Column _buildAboutMeSectionPhone(
+    ColorScheme color,
+    TextTheme textTheme,
+    ListTileThemeData listTileColor,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildAboutMeSectionName(),
+        Gap(48.0),
+        Container(
+          height: 180.0,
+          width: 180.0,
+          decoration: BoxDecoration(
+            color: color.surfaceContainer,
+            shape: BoxShape.circle,
+            border: Border.all(width: 2.0, color: color.outline),
+            image: DecorationImage(image: AssetImage('assets/rhen.jpg')),
+          ),
+        ),
+        Gap(24.0),
+        _buildAvailableForNewProjectsText(),
+        Gap(24.0),
+        RichText(
+          text: TextSpan(
+            style: AppTextScale.of(context).scale(
+              textTheme.bodyMedium!.copyWith(color: listTileColor.iconColor),
+            ),
+            children: [
+              TextSpan(text: '''I'm a Flutter developer based in the '''),
+              TextSpan(
+                text: '''Philippines ''',
+                style: AppTextScale.of(
+                  context,
+                ).scale(textTheme.bodyMedium!.copyWith(color: Colors.white)),
+              ),
+              TextSpan(
+                text:
+                    '''with 5+ years of experience building cross-platform mobile and web apps. I've shipped products used by real users — from investment features inside the Maya super app to hotel management systems contracted by Marriott Hotels US.\n\n''',
+              ),
+              TextSpan(text: '''I care deeply about '''),
+              TextSpan(
+                text: '''clean architecture''',
+                style: AppTextScale.of(
+                  context,
+                ).scale(textTheme.bodyMedium!.copyWith(color: Colors.white)),
+              ),
+              TextSpan(
+                text:
+                    ''', offline-first design, and building things that actually hold up in production. I prefer working close to the problem — understanding what the product needs before writing a single line of code.\n\n''',
+              ),
+              TextSpan(text: '''Outside work, I ride my '''),
+              TextSpan(
+                text: '''XSR155 ''',
+                style: AppTextScale.of(
+                  context,
+                ).scale(textTheme.bodyMedium!.copyWith(color: Colors.white)),
+              ),
+              TextSpan(
+                text:
+                    '''around town, keep up with anime and manga, and hunt for good streetwear finds in thrift stores. I also taught mobile development to college students for a year — turns out explaining things to others makes you a better developer.''',
+              ),
+            ],
+          ),
+        ),
+        _buildAboutMeCards(),
+      ],
+    );
+  }
+
+  Column _buildAboutMeCards() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildAboutMeCard('📍', 'location', 'Philippines'),
+        _buildAboutMeCard('💼', 'experience', '5+ years Flutter development'),
+        _buildAboutMeCard(
+          '🎯',
+          'specialization',
+          'Cross-platform · Firebase · BLoC',
+        ),
+        _buildAboutMeCard('🏍️', 'rides', 'Yamaha XSR155'),
+        _buildAboutMeCard(
+          '📚',
+          'currently watching',
+          'Fire Force · Tensura · One Piece',
+        ),
+        _buildAboutMeCard('🎓', 'also', 'Former college instructor · PDM'),
+      ],
+    );
+  }
+
+  Container _buildAboutMeCard(String iconString, String label, String description) {
+    final color = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final listTileColor = Theme.of(context).listTileTheme;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 12.0),
+      decoration: BoxDecoration(
+        color: color.surface,
+        borderRadius: BorderRadius.circular(12.0),
+        border: Border.all(color: color.outline, width: 1.5),
+      ),
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        spacing: 24.0,
+        children: [
+          Text(iconString, style: TextStyle(fontSize: 21)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: AppTextScale.of(context).scale(
+                  textTheme.labelSmall!.copyWith(
+                    color: listTileColor.iconColor,
+                    letterSpacing: 0,
+                    fontSize: 12.0,
+                  ),
+                ),
+              ),
+              Gap(4.0),
+              Text(
+                description,
+                style: AppTextScale.of(
+                  context,
+                ).scale(textTheme.bodyLarge!.copyWith(color: Colors.white)),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -427,6 +733,7 @@ class _LandingPageState extends State<LandingPage> {
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: SectionLayout(
+        key: stacksKey,
         child: Column(
           spacing: 64.0,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -528,6 +835,7 @@ class _LandingPageState extends State<LandingPage> {
         textTheme.labelSmall!.copyWith(
           color: listTileColor.iconColor,
           letterSpacing: 3.0,
+          fontSize: 14.0,
         ),
       ),
     );
@@ -543,7 +851,10 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Column _buildSectionName({required String overline, required String headline}) {
+  Column _buildSectionName({
+    required String overline,
+    required String headline,
+  }) {
     return Column(
       spacing: 12.0,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -551,7 +862,7 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Container _buildDivider({Key? key}) {
+  Container _buildDivider() {
     final color = Theme.of(context).colorScheme;
     return Container(height: 1, color: color.outline);
   }
@@ -727,12 +1038,8 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Container _buildViewProjectsButton(ColorScheme color, TextTheme textTheme) {
-    return Container(
-      margin: EdgeInsets.only(right: 24.0),
-      child: ElevatedButton(
-        onPressed: () {
-          final context = projectsKey.currentContext;
+  void _navigateToKey(GlobalKey sectionKey) {
+    final context = sectionKey.currentContext;
           if (context != null) {
             Scrollable.ensureVisible(
               context,
@@ -740,7 +1047,13 @@ class _LandingPageState extends State<LandingPage> {
               curve: Curves.easeInOut,
             );
           }
-        },
+  }
+
+  Container _buildViewProjectsButton(ColorScheme color, TextTheme textTheme) {
+    return Container(
+      margin: EdgeInsets.only(right: 24.0),
+      child: ElevatedButton(
+        onPressed: () => _navigateToKey(projectsKey),
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
             // if (states.contains(WidgetState.hovered)) {
@@ -773,7 +1086,7 @@ class _LandingPageState extends State<LandingPage> {
     return Container(
       margin: EdgeInsets.only(right: 24.0),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: downloadCv,
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
             if (states.contains(WidgetState.hovered)) {
@@ -805,6 +1118,13 @@ class _LandingPageState extends State<LandingPage> {
         ),
       ),
     );
+  }
+
+  void downloadCv() {
+    web.document.createElement('a') as web.HTMLAnchorElement
+      ..href = 'assets/rhen_cv_2026.pdf'
+      ..download = 'rhen_cv.pdf'
+      ..click();
   }
 
   EdgeInsets responsivePadding() {
