@@ -89,7 +89,6 @@ class _ExperienceCardState extends State<ExperienceCard> {
   }
 
   Text _buildTimeline() {
-    final textTheme = Theme.of(context).textTheme;
     final listTileColor = Theme.of(context).listTileTheme;
 
     return Text(

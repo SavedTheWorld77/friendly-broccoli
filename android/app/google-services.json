@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "411324226230",
+    "project_id": "private-sojuz",
+    "storage_bucket": "private-sojuz.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411324226230:android:5390c3e06673d645ff6417",
+        "android_client_info": {
+          "package_name": "com.example.dev_portfolio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfcY_cIT-HAm6X4s-qSipRVrPtqj-guWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

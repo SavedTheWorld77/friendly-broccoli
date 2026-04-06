@@ -1,5 +1,3 @@
-import 'package:dev_portfolio/theme/app_typography.dart';
-import 'package:dev_portfolio/widgets/app_text_scale.dart';
 import 'package:flutter/material.dart';
 
 class HoverCard extends StatefulWidget {

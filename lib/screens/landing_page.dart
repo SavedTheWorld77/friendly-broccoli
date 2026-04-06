@@ -22,6 +22,8 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  final GlobalKey projectsKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
@@ -60,34 +62,34 @@ class _LandingPageState extends State<LandingPage> {
         actions: [_hireMeButton(color, textTheme)],
       ),
       extendBodyBehindAppBar: true,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 90 + 64.0, bottom: 12.0),
-        child: Column(
-          spacing: 64.0,
-          children: [
-            ResponsiveLayoutWidget(
-              phone: _firstSectionPhone(color, textTheme, listTileColor),
-              desktop: _firstSectionWeb(color, textTheme, listTileColor),
-            ),
-            _buildDivider(),
-            _buildSecondSection(),
-            _buildDivider(),
-            _buildThirdSection(),
-            _buildDivider(),
-            _buildFourthSection(),
-            _buildGetInTouch(),
-            Gap(24.0),
-            _buildFooter(),
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(top: 90 + 64.0, bottom: 12.0),
+          child: Column(
+            spacing: 64.0,
+            children: [
+              ResponsiveLayoutWidget(
+                phone: _firstSectionPhone(color, textTheme, listTileColor),
+                desktop: _firstSectionWeb(color, textTheme, listTileColor),
+              ),
+              _buildDivider(),
+              _buildSecondSection(),
+              _buildDivider(key: projectsKey),
+              _buildThirdSection(),
+              _buildDivider(),
+              _buildFourthSection(),
+              _buildGetInTouch(),
+              Gap(24.0),
+              _buildFooter(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  _buildGetInTouch() {
+  Container _buildGetInTouch() {
     final color = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final listTileColor = Theme.of(context).listTileTheme;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
@@ -110,7 +112,7 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _buildFooter() {
+  Container _buildFooter() {
     final color = Theme.of(context).colorScheme;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 24.0),
@@ -135,7 +137,7 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _buildGetInTouchText() {
+  Text _buildGetInTouchText() {
     final color = Theme.of(context).colorScheme;
     return Text(
       'get in touch',
@@ -146,15 +148,14 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _buildLetsWorkTogetherText() {
-    final color = Theme.of(context).colorScheme;
+  Text _buildLetsWorkTogetherText() {
     return Text(
       '''Let's work together''',
       style: Theme.of(context).textTheme.displayLarge,
     );
   }
 
-  _buildGetInTouchDescText() {
+  SizedBox _buildGetInTouchDescText() {
     final textTheme = Theme.of(context).textTheme;
     final listTileColor = Theme.of(context).listTileTheme;
 
@@ -173,7 +174,7 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _buildGetInTouchButtons() {
+  Row _buildGetInTouchButtons() {
     return Row(
       spacing: 24.0,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -185,246 +186,217 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _buildSendMeAnEmailButton() {
+  SizedBox _buildSendMeAnEmailButton() {
     return SizedBox(
       height: 50,
       child: ElevatedButton(onPressed: () {}, child: Text('send me an email')),
     );
   }
 
-  _buildGithubButton() {
+  SizedBox _buildGithubButton() {
     return SizedBox(
       height: 50,
       child: OutlinedButton(onPressed: () {}, child: Text('GitHub')),
     );
   }
 
-  _buildLinkedInButton() {
+  SizedBox _buildLinkedInButton() {
     return SizedBox(
       height: 50,
       child: OutlinedButton(onPressed: () {}, child: Text('GitHub')),
     );
   }
 
-  _techCard(String iconString, String title, String description) {
-    final color = Theme.of(context).colorScheme;
-
-    final textTheme = Theme.of(context).textTheme;
-
-    final listTileColor = Theme.of(context).listTileTheme;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 8.0,
-      children: [
-        Text(iconString, style: TextStyle(fontSize: 21)),
-        Text(
-          title,
-          style: AppTextScale.of(context).scale(
-            textTheme.labelLarge!.copyWith(
-              color: color.primary,
-              fontWeight: FontWeight.w600,
-              letterSpacing: null,
+  Padding _buildFourthSection() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: SectionLayout(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionName(overline: 'background', headline: 'experience'),
+            Gap(128.0),
+            ExperienceCard(
+              timeline: '2023 - present',
+              title: 'Lead Flutter Developer',
+              subtitle: 'PaxAide (Independent)',
+              description:
+                  '''Architecting and building a full-stack hotel and airline management platform contracted by executives at Marriott Hotels US. Responsible for Flutter Web and Android apps, Firebase backend, CI/CD pipeline via Codemagic, and dual DEV/PROD environment management.''',
+              tags: [
+                'Flutter',
+                'Firebase',
+                'BloC',
+                'Codemagic',
+                'GoRouter',
+                'Cloud Functions',
+              ],
             ),
-          ),
-        ),
-        Text(
-          description,
-          style: AppTextScale.of(context).scale(
-            textTheme.labelMedium!.copyWith(
-              color: listTileColor.iconColor,
-              fontFamily: AppTypography.sora,
-              letterSpacing: null,
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 32.0),
+              child: _buildDivider(),
             ),
-          ),
+            ExperienceCard(
+              timeline: '2024 - present',
+              title: 'Senior Flutter Developer',
+              subtitle: 'MobileMo',
+              description:
+                  '''Assigned to build a fully customized multi-tenant SaaS platform for client-specific form creation and reporting workflows. Integrated AI capabilities for automated report generation and data analysis, removing the need for developer intervention per client configuration.''',
+              tags: ['Flutter', 'AI', 'SaaS', 'Multi-tenant', 'Reporting'],
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 32.0),
+              child: _buildDivider(),
+            ),
+            ExperienceCard(
+              timeline: 'ongoing',
+              title: 'Mobile App Developer',
+              subtitle: 'Freelance / Contract',
+              description:
+                  'Delivering cross-platform Flutter applications for various clients. Specializing in clean architecture patterns, offline-first data sync, and complex multi-step UI flows.',
+              tags: [
+                'Flutter',
+                'React',
+                'Dart',
+                'Web',
+                'Mobile Development',
+                'SQLite',
+                'REST APIs',
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 32.0),
+              child: _buildDivider(),
+            ),
+            ExperienceCard(
+              timeline: '2023 - 2024',
+              title: 'College Instructor',
+              subtitle: 'Pambayang Dalubhasaan ng Marilao',
+              description:
+                  'Taught mobile development to two sections of 3rd year IT students, covering Flutter fundamentals and practical app development workflows.',
+              tags: ['Flutter', 'Mobile Development', 'Teaching'],
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 32.0),
+              child: _buildDivider(),
+            ),
+            ExperienceCard(
+              timeline: '2022 - 2024',
+              title: 'Software Engineer',
+              subtitle: 'Guerilla360',
+              description:
+                  '''Built and shipped two client-facing Flutter applications — Maya Funds, an investment feature now fully integrated and live in the Maya super app since 2023, and HMR Shop n' Bid, a live e-commerce platform with real-time livestream auction capabilities.''',
+              tags: [
+                'Flutter',
+                'Firebase',
+                'Fintech',
+                'Livestream',
+                'E-commerce',
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 32.0),
+              child: _buildDivider(),
+            ),
+            ExperienceCard(
+              timeline: '2020 - 2022',
+              title: 'Lead Software Engineer',
+              subtitle: 'Hooli Development Services',
+              description:
+                  '''Led development of ReadyAgent, an Uber-style real estate agent hailing app with live Google Maps tracking and dual customer/agent portals. Also built the Website Email Marketing tool — a Python/Django automation pipeline that audits client websites via Lighthouse and sends personalized optimization reports.''',
+              tags: [
+                'Flutter',
+                'Google Maps',
+                'Golang',
+                'MySQL',
+                'Python',
+                'Django',
+              ],
+            ),
+          ],
         ),
-      ],
-    );
-  }
-
-  _buildFourthSection() {
-    return SectionLayout(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSectionName(overline: 'background', headline: 'experience'),
-          Gap(128.0),
-          ExperienceCard(
-            timeline: '2023 - present',
-            title: 'Lead Flutter Developer',
-            subtitle: 'PaxAide (Independent)',
-            description:
-                '''Architecting and building a full-stack hotel and airline management platform contracted by executives at Marriott Hotels US. Responsible for Flutter Web and Android apps, Firebase backend, CI/CD pipeline via Codemagic, and dual DEV/PROD environment management.''',
-            tags: [
-              'Flutter',
-              'Firebase',
-              'BloC',
-              'Codemagic',
-              'GoRouter',
-              'Cloud Functions',
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 32.0),
-            child: _buildDivider(),
-          ),
-          ExperienceCard(
-            timeline: '2024 - present',
-            title: 'Senior Flutter Developer',
-            subtitle: 'MobileMo',
-            description:
-                '''Assigned to build a fully customized multi-tenant SaaS platform for client-specific form creation and reporting workflows. Integrated AI capabilities for automated report generation and data analysis, removing the need for developer intervention per client configuration.''',
-            tags: ['Flutter', 'AI', 'SaaS', 'Multi-tenant', 'Reporting'],
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 32.0),
-            child: _buildDivider(),
-          ),
-          ExperienceCard(
-            timeline: 'ongoing',
-            title: 'Mobile App Developer',
-            subtitle: 'Freelance / Contract',
-            description:
-                'Delivering cross-platform Flutter applications for various clients. Specializing in clean architecture patterns, offline-first data sync, and complex multi-step UI flows.',
-            tags: [
-              'Flutter',
-              'React',
-              'Dart',
-              'Web',
-              'Mobile Development',
-              'SQLite',
-              'REST APIs',
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 32.0),
-            child: _buildDivider(),
-          ),
-          ExperienceCard(
-            timeline: '2023 - 2024',
-            title: 'College Instructor',
-            subtitle: 'Pambayang Dalubhasaan ng Marilao',
-            description:
-                'Taught mobile development to two sections of 3rd year IT students, covering Flutter fundamentals and practical app development workflows.',
-            tags: ['Flutter', 'Mobile Development', 'Teaching'],
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 32.0),
-            child: _buildDivider(),
-          ),
-          ExperienceCard(
-            timeline: '2022 - 2024',
-            title: 'Software Engineer',
-            subtitle: 'Guerilla360',
-            description:
-                '''Built and shipped two client-facing Flutter applications — Maya Funds, an investment feature now fully integrated and live in the Maya super app since 2023, and HMR Shop n' Bid, a live e-commerce platform with real-time livestream auction capabilities.''',
-            tags: [
-              'Flutter',
-              'Firebase',
-              'Fintech',
-              'Livestream',
-              'E-commerce',
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 32.0),
-            child: _buildDivider(),
-          ),
-          ExperienceCard(
-            timeline: '2020 - 2022',
-            title: 'Lead Software Engineer',
-            subtitle: 'Hooli Development Services',
-            description:
-                '''Led development of ReadyAgent, an Uber-style real estate agent hailing app with live Google Maps tracking and dual customer/agent portals. Also built the Website Email Marketing tool — a Python/Django automation pipeline that audits client websites via Lighthouse and sends personalized optimization reports.''',
-            tags: [
-              'Flutter',
-              'Google Maps',
-              'Golang',
-              'MySQL',
-              'Python',
-              'Django',
-            ],
-          ),
-        ],
       ),
     );
   }
 
-  _buildThirdSection() {
+  SectionLayout _buildThirdSection() {
     return SectionLayout(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSectionName(overline: 'selected work', headline: 'projects'),
-          Gap(64.0),
-          FeaturedProjectHoverCard(),
-          Gap(24.0),
-          ..._buildProjectHoverCards([
-            ProjectHoverCard(
-              title: 'Finance Tracker',
-              description:
-                  'Personal finance app with Firestore/SQLite hybrid sync, warm "Parchment" design system, and BLoC state management. Built for offline-first reliability.',
-              projectTag: ProjectTag.offlineFirst,
-              tags: ['Flutter', 'Drift', 'Firestore'],
-            ),
-            ProjectHoverCard(
-              title: 'ReadyAgent',
-              description:
-                  '''Uber-style real estate agent hailing app. Customers browse properties on a live Google Maps interface, tap a listing to see available agents, and request a meeting on the spot. Agents receive requests in real time and both parties can track each other's location live — like ride-hailing, but for property viewings. Sole developer.''',
-              projectTag: ProjectTag.dualPortal,
-              tags: [
-                'Flutter',
-                'Google Maps',
-                'Real-time',
-                'Live Tracking',
-                'MySQL',
-                'Firebase',
-                'Golang',
-              ],
-            ),
-            ProjectHoverCard(
-              title: 'Maya Funds',
-              description:
-                  'Investment feature contracted by Maya and fully integrated into the main Maya super app. Users can invest in ATRAM funds and other instruments, with a built-in risk appetite calculator to guide investment decisions. Live on the Maya app since 2023. Sole developer.',
-              projectTag: ProjectTag.liveFintech,
-              tags: ['Flutter', 'Firebase', 'Fintech', 'ATRAM', 'Maya'],
-            ),
-            ProjectHoverCard(
-              title: '''HMR Shop n' Bid''',
-              description:
-                  '''E-commerce platform for HMR with a twist — beyond standard product listings, it features a live bidding system with real-time livestream auctions. Think Shopee, but with a built-in live shopping and bidding experience for HMR's inventory.''',
-              projectTag: ProjectTag.eCommerce,
-              tags: [
-                'Flutter',
-                'Livestream',
-                'Real-time',
-                'E-commerce',
-                'Firebase',
-              ],
-            ),
-            ProjectHoverCard(
-              title: 'SaaS Form & Report Builder',
-              description:
-                  'Fully customized multi-tenant SaaS platform where client-specific forms and reporting workflows are built directly in-app. Integrated with AI for generating custom reports and analyzing submission data — no dev intervention needed per client configuration.',
-              projectTag: ProjectTag.saasAiPowered,
-              tags: ['Flutter', 'AI', 'Multi-tenant', 'SaaS', 'Reporting'],
-            ),
-            ProjectHoverCard(
-              title: 'Marketing Mailer',
-              description:
-                  'Python and Django tool that automates web performance auditing and outreach. Reads a list of client websites from an Excel file, runs Lighthouse checks on each one, then sends a personalized email to each site owner with their Lighthouse score and tailored optimization tips — used to market our web development optimization services.',
-              projectTag: ProjectTag.utility,
-              tags: ['Python', 'Django', 'Lighthouse', 'Automation', 'Email'],
-            ),
-            ProjectHoverCard(
-              title: 'Open to collaboration',
-              description:
-                  '''Looking for interesting Flutter projects — especially apps with complex state, real-time data, or offline-first requirements. Let's build something.''',
-              projectTag: ProjectTag.available,
-              tags: ['Freelance', 'Contract'],
-            ),
-          ]),
-        ],
+      key: projectsKey,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionName(overline: 'selected work', headline: 'projects'),
+            Gap(64.0),
+            FeaturedProjectHoverCard(),
+            Gap(24.0),
+            ..._buildProjectHoverCards([
+              ProjectHoverCard(
+                title: 'Finance Tracker',
+                description:
+                    'Personal finance app with Firestore/SQLite hybrid sync, warm "Parchment" design system, and BLoC state management. Built for offline-first reliability.',
+                projectTag: ProjectTag.offlineFirst,
+                tags: ['Flutter', 'Drift', 'Firestore'],
+              ),
+              ProjectHoverCard(
+                title: 'ReadyAgent',
+                description:
+                    '''Uber-style real estate agent hailing app. Customers browse properties on a live Google Maps interface, tap a listing to see available agents, and request a meeting on the spot. Agents receive requests in real time and both parties can track each other's location live — like ride-hailing, but for property viewings. Sole developer.''',
+                projectTag: ProjectTag.dualPortal,
+                tags: [
+                  'Flutter',
+                  'Google Maps',
+                  'Real-time',
+                  'Live Tracking',
+                  'MySQL',
+                  'Firebase',
+                  'Golang',
+                ],
+              ),
+              ProjectHoverCard(
+                title: 'Maya Funds',
+                description:
+                    'Investment feature contracted by Maya and fully integrated into the main Maya super app. Users can invest in ATRAM funds and other instruments, with a built-in risk appetite calculator to guide investment decisions. Live on the Maya app since 2023. Sole developer.',
+                projectTag: ProjectTag.liveFintech,
+                tags: ['Flutter', 'Firebase', 'Fintech', 'ATRAM', 'Maya'],
+              ),
+              ProjectHoverCard(
+                title: '''HMR Shop n' Bid''',
+                description:
+                    '''E-commerce platform for HMR with a twist — beyond standard product listings, it features a live bidding system with real-time livestream auctions. Think Shopee, but with a built-in live shopping and bidding experience for HMR's inventory.''',
+                projectTag: ProjectTag.eCommerce,
+                tags: [
+                  'Flutter',
+                  'Livestream',
+                  'Real-time',
+                  'E-commerce',
+                  'Firebase',
+                ],
+              ),
+              ProjectHoverCard(
+                title: 'SaaS Form & Report Builder',
+                description:
+                    'Fully customized multi-tenant SaaS platform where client-specific forms and reporting workflows are built directly in-app. Integrated with AI for generating custom reports and analyzing submission data — no dev intervention needed per client configuration.',
+                projectTag: ProjectTag.saasAiPowered,
+                tags: ['Flutter', 'AI', 'Multi-tenant', 'SaaS', 'Reporting'],
+              ),
+              ProjectHoverCard(
+                title: 'Marketing Mailer',
+                description:
+                    'Python and Django tool that automates web performance auditing and outreach. Reads a list of client websites from an Excel file, runs Lighthouse checks on each one, then sends a personalized email to each site owner with their Lighthouse score and tailored optimization tips — used to market our web development optimization services.',
+                projectTag: ProjectTag.utility,
+                tags: ['Python', 'Django', 'Lighthouse', 'Automation', 'Email'],
+              ),
+              ProjectHoverCard(
+                title: 'Open to collaboration',
+                description:
+                    '''Looking for interesting Flutter projects — especially apps with complex state, real-time data, or offline-first requirements. Let's build something.''',
+                projectTag: ProjectTag.available,
+                tags: ['Freelance', 'Contract'],
+              ),
+            ]),
+          ],
+        ),
       ),
     );
   }
@@ -451,100 +423,103 @@ class _LandingPageState extends State<LandingPage> {
     return rows;
   }
 
-  _buildSecondSection() {
-    return SectionLayout(
-      child: Column(
-        spacing: 64.0,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSectionName(
-            overline: 'tech stack',
-            headline: 'tools of the trade',
-          ),
-          Wrap(
-            spacing: 16.0,
-            runSpacing: 16.0,
-            children: [
-              SizedBox(
-                width: 180,
-                height: 140,
-                child: SkillHoverCard(
-                  iconString: '🐦',
-                  title: 'Flutter',
-                  description: 'primary framework',
+  Padding _buildSecondSection() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0),
+      child: SectionLayout(
+        child: Column(
+          spacing: 64.0,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionName(
+              overline: 'tech stack',
+              headline: 'tools of the trade',
+            ),
+            Wrap(
+              spacing: 16.0,
+              runSpacing: 16.0,
+              children: [
+                SizedBox(
+                  width: 180,
+                  height: 140,
+                  child: SkillHoverCard(
+                    iconString: '🐦',
+                    title: 'Flutter',
+                    description: 'primary framework',
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 180,
-                height: 140,
-                child: SkillHoverCard(
-                  iconString: '🎯',
-                  title: 'Dart',
-                  description: 'language',
+                SizedBox(
+                  width: 180,
+                  height: 140,
+                  child: SkillHoverCard(
+                    iconString: '🎯',
+                    title: 'Dart',
+                    description: 'language',
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 180,
-                height: 140,
-                child: SkillHoverCard(
-                  iconString: '🔥',
-                  title: 'Firebase',
-                  description: 'Firestore · Auth · Storage',
+                SizedBox(
+                  width: 180,
+                  height: 140,
+                  child: SkillHoverCard(
+                    iconString: '🔥',
+                    title: 'Firebase',
+                    description: 'Firestore · Auth · Storage',
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 180,
-                height: 140,
-                child: SkillHoverCard(
-                  iconString: '🧱',
-                  title: 'BLoC / Cubit',
-                  description: 'state management',
+                SizedBox(
+                  width: 180,
+                  height: 140,
+                  child: SkillHoverCard(
+                    iconString: '🧱',
+                    title: 'BLoC / Cubit',
+                    description: 'state management',
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 180,
-                height: 140,
-                child: SkillHoverCard(
-                  iconString: '🗄️',
-                  title: 'Drift ORM',
-                  description: 'local SQLite',
+                SizedBox(
+                  width: 180,
+                  height: 140,
+                  child: SkillHoverCard(
+                    iconString: '🗄️',
+                    title: 'Drift ORM',
+                    description: 'local SQLite',
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 180,
-                height: 140,
-                child: SkillHoverCard(
-                  iconString: '🔀',
-                  title: 'GoRouter',
-                  description: 'navigation',
+                SizedBox(
+                  width: 180,
+                  height: 140,
+                  child: SkillHoverCard(
+                    iconString: '🔀',
+                    title: 'GoRouter',
+                    description: 'navigation',
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 180,
-                height: 140,
-                child: SkillHoverCard(
-                  iconString: '🚀',
-                  title: 'Codemagic',
-                  description: 'CI/CD',
+                SizedBox(
+                  width: 180,
+                  height: 140,
+                  child: SkillHoverCard(
+                    iconString: '🚀',
+                    title: 'Codemagic',
+                    description: 'CI/CD',
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 180,
-                height: 140,
-                child: SkillHoverCard(
-                  iconString: '☁️',
-                  title: 'Cloud Functions',
-                  description: 'backend logic',
+                SizedBox(
+                  width: 180,
+                  height: 140,
+                  child: SkillHoverCard(
+                    iconString: '☁️',
+                    title: 'Cloud Functions',
+                    description: 'backend logic',
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  _buildOverline(String text) {
+  Text _buildOverline(String text) {
     final textTheme = Theme.of(context).textTheme;
     final listTileColor = Theme.of(context).listTileTheme;
     return Text(
@@ -558,7 +533,7 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _buildHeadline(String text) {
+  Text _buildHeadline(String text) {
     final textTheme = Theme.of(context).textTheme;
     return Text(
       text,
@@ -568,7 +543,7 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _buildSectionName({required String overline, required String headline}) {
+  Column _buildSectionName({required String overline, required String headline}) {
     return Column(
       spacing: 12.0,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -576,12 +551,12 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Container _buildDivider() {
+  Container _buildDivider({Key? key}) {
     final color = Theme.of(context).colorScheme;
     return Container(height: 1, color: color.outline);
   }
 
-  _firstSectionWeb(
+  SectionLayout _firstSectionWeb(
     ColorScheme color,
     TextTheme textTheme,
     ListTileThemeData listTileColor,
@@ -596,7 +571,7 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  _firstSectionPhone(
+  SectionLayout _firstSectionPhone(
     ColorScheme color,
     TextTheme textTheme,
     ListTileThemeData listTileColor,
@@ -756,7 +731,16 @@ class _LandingPageState extends State<LandingPage> {
     return Container(
       margin: EdgeInsets.only(right: 24.0),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          final context = projectsKey.currentContext;
+          if (context != null) {
+            Scrollable.ensureVisible(
+              context,
+              duration: const Duration(milliseconds: 600),
+              curve: Curves.easeInOut,
+            );
+          }
+        },
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
             // if (states.contains(WidgetState.hovered)) {

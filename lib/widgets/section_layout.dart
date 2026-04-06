@@ -5,8 +5,6 @@ class SectionLayout extends StatelessWidget {
 
   final Widget child;
 
-  static const double _maxWidth = 1200;
-
   static double horizontalPadding(BuildContext context) {
     return MediaQuery.of(context).size.width * 0.005;
   }

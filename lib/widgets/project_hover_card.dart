@@ -65,7 +65,7 @@ class _ProjectHoverCardState extends State<ProjectHoverCard> {
     );
   }
 
-  _buildBadge() {
+  PortfolioBadge _buildBadge() {
     switch (widget.projectTag) {
       case ProjectTag.dualPortal:
         return _buildDualPortalTag();
@@ -160,37 +160,6 @@ class _ProjectHoverCardState extends State<ProjectHoverCard> {
     );
   }
 
-  Container _buildStatCard(String label, Color labelColor, String statTitle) {
-    final color = Theme.of(context).colorScheme;
-
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: color.surfaceContainerHigh,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Column(
-        spacing: 8.0,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            style: AppTextScale.of(
-              context,
-            ).scale(AppTypography.monoStat.copyWith(color: labelColor)),
-          ),
-          Text(
-            statTitle,
-            style: AppTextScale.of(context).scale(
-              AppTypography.monoMeta.copyWith(color: color.onSurfaceVariant),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Text _buildHeadline() {
     final textTheme = Theme.of(context).textTheme;
     return Text(
@@ -198,27 +167,6 @@ class _ProjectHoverCardState extends State<ProjectHoverCard> {
       style: AppTextScale.of(context).scale(
         textTheme.displayMedium!.copyWith(color: Colors.white, fontSize: 21.0),
       ),
-    );
-  }
-
-  Row _buildOverline() {
-    final color = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      spacing: 12.0,
-      children: [
-        Icon(Icons.star, color: color.secondary, size: 8.0),
-        Text(
-          'featured project',
-          style: AppTextScale.of(context).scale(
-            textTheme.labelSmall!.copyWith(
-              color: color.secondary,
-              letterSpacing: 3.0,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

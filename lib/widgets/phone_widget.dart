@@ -20,7 +20,6 @@ class _PhoneWidgetState extends State<PhoneWidget> {
     final screenHeight = MediaQuery.of(context).size.height;
     final phoneHeight = screenHeight * 0.7;
     final phoneWidth = phoneHeight * 9 / 19.5; // phone aspect ratio
-    final u = phoneWidth / 100;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
