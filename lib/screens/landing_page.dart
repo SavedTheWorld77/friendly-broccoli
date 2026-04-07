@@ -62,14 +62,18 @@ class _LandingPageState extends State<LandingPage> {
           ],
         ),
         actions: [
-          IconButton(onPressed: () {
-            widget.onToggle();
-            setState(() {
-              isDarkMode = !isDarkMode;
-            });
-          }, icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode)),
+          IconButton(
+            onPressed: () {
+              widget.onToggle();
+              setState(() {
+                isDarkMode = !isDarkMode;
+              });
+            },
+            icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
+          ),
           Gap(12.0),
-          _hireMeButton(color, textTheme)],
+          _hireMeButton(color, textTheme),
+        ],
       ),
       extendBodyBehindAppBar: true,
       body: SafeArea(
@@ -470,7 +474,11 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Container _buildAboutMeCard(String iconString, String label, String description) {
+  Container _buildAboutMeCard(
+    String iconString,
+    String label,
+    String description,
+  ) {
     final color = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final listTileColor = Theme.of(context).listTileTheme;
@@ -658,8 +666,12 @@ class _LandingPageState extends State<LandingPage> {
                   'Firebase',
                   'Golang',
                 ],
+                onViewTap: () =>
+                    web.window.open('https://www.readyagent.app', '_blank'),
               ),
               ProjectHoverCard(
+                onViewTap: () =>
+                    web.window.open('https://www.maya.ph/funds', '_blank'),
                 title: 'Maya Funds',
                 description:
                     'Investment feature contracted by Maya and fully integrated into the main Maya super app. Users can invest in ATRAM funds and other instruments, with a built-in risk appetite calculator to guide investment decisions. Live on the Maya app since 2023. Sole developer.',
@@ -667,6 +679,10 @@ class _LandingPageState extends State<LandingPage> {
                 tags: ['Flutter', 'Firebase', 'Fintech', 'ATRAM', 'Maya'],
               ),
               ProjectHoverCard(
+                onViewTap: () => web.window.open(
+                  'https://play.google.com/store/apps/details?id=ph.hmr.shopnbid',
+                  '_blank',
+                ),
                 title: '''HMR Shop n' Bid''',
                 description:
                     '''E-commerce platform for HMR with a twist — beyond standard product listings, it features a live bidding system with real-time livestream auctions. Think Shopee, but with a built-in live shopping and bidding experience for HMR's inventory.''',
@@ -1040,13 +1056,13 @@ class _LandingPageState extends State<LandingPage> {
 
   void _navigateToKey(GlobalKey sectionKey) {
     final context = sectionKey.currentContext;
-          if (context != null) {
-            Scrollable.ensureVisible(
-              context,
-              duration: const Duration(milliseconds: 600),
-              curve: Curves.easeInOut,
-            );
-          }
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   Container _buildViewProjectsButton(ColorScheme color, TextTheme textTheme) {

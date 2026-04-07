@@ -12,12 +12,14 @@ class ProjectHoverCard extends StatefulWidget {
     required this.title,
     required this.description,
     required this.projectTag,
+    this.onViewTap,
     this.tags = const [],
   });
   final String title;
   final String description;
   final ProjectTag projectTag;
   final List<String> tags;
+  final Function()? onViewTap;
 
   @override
   State<ProjectHoverCard> createState() => _ProjectHoverCardState();
@@ -44,7 +46,12 @@ class _ProjectHoverCardState extends State<ProjectHoverCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(child: _buildTags()),
-                    CardActionButton(label: 'view', onTap: () {}),
+                    CardActionButton(
+                      label: 'view',
+                      onTap: () {
+                        if (widget.onViewTap != null) widget.onViewTap!();
+                      },
+                    ),
                   ],
                 ),
               ],
